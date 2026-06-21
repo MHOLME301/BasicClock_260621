@@ -24,18 +24,18 @@
   }
   .clock-wrap {
     text-align: center;
-    padding: 24px 32px;
+    padding: 8px 16px;
     width: 100%;
     max-width: 320px;
   }
   .greeting {
-    font-size: clamp(0.85rem, 2vw, 1rem);
+    font-size: clamp(0.8rem, 2vw, 0.95rem);
     color: var(--muted);
-    margin-bottom: 6px;
+    margin-bottom: 2px;
     letter-spacing: 0.02em;
   }
   .time {
-    font-size: clamp(2.5rem, 8vw, 4.5rem);
+    font-size: clamp(2rem, 7vw, 3.4rem);
     font-weight: 600;
     letter-spacing: 0.02em;
     line-height: 1;
@@ -45,21 +45,21 @@
     color: var(--accent);
   }
   .date {
-    margin-top: 8px;
-    font-size: clamp(0.9rem, 2.5vw, 1.15rem);
+    margin-top: 2px;
+    font-size: clamp(0.8rem, 2.2vw, 1rem);
     color: var(--accent);
     letter-spacing: 0.04em;
     text-transform: uppercase;
   }
   .progress-row {
-    margin-top: 18px;
+    margin-top: 10px;
     display: flex;
     align-items: center;
     gap: 10px;
   }
   .progress-track {
     flex: 1;
-    height: 6px;
+    height: 5px;
     border-radius: 4px;
     background: var(--track);
     overflow: hidden;
@@ -72,24 +72,24 @@
     transition: width 1s linear;
   }
   .progress-label {
-    font-size: 0.75rem;
+    font-size: 0.7rem;
     color: var(--muted);
     white-space: nowrap;
     font-variant-numeric: tabular-nums;
   }
   .info-row {
-    margin-top: 16px;
+    margin-top: 8px;
     display: flex;
     justify-content: center;
-    gap: 18px;
+    gap: 14px;
     flex-wrap: wrap;
   }
   .info-chip {
-    font-size: 0.8rem;
+    font-size: 0.75rem;
     color: var(--muted);
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 4px;
   }
   .info-chip strong {
     color: var(--fg);
@@ -150,7 +150,7 @@
     setInterval(update, 1000);
 
     // ---- CONFIG: edit these two lines for your setup ----
-    const LATITUDE = 55.9533;   // Set to Edinburgh
+    const LATITUDE = 55.9533;   // Edinburgh
     const LONGITUDE = -3.1883;
     const TARGET_DATE = "2026-10-14"; // countdown target, e.g. a project end date
     const TARGET_LABEL = "Wester Hailes deadline";
