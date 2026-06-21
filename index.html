@@ -5,10 +5,11 @@
 <title>Live Clock</title>
 <style>
   :root {
-    --bg: #FFFFF;
-    --fg: #00000;
-    --accent: #FF0000;
-    --muted: #FF0000;
+    --bg: #FFFFFF;
+    --fg: #1A1A1A;
+    --accent: #E03131;
+    --muted: #6B6B6B;
+    --track: #ECECEC;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html, body {
@@ -24,6 +25,14 @@
   .clock-wrap {
     text-align: center;
     padding: 24px 32px;
+    width: 100%;
+    max-width: 320px;
+  }
+  .greeting {
+    font-size: clamp(0.85rem, 2vw, 1rem);
+    color: var(--muted);
+    margin-bottom: 6px;
+    letter-spacing: 0.02em;
   }
   .time {
     font-size: clamp(2.5rem, 8vw, 4.5rem);
@@ -38,16 +47,49 @@
   .date {
     margin-top: 8px;
     font-size: clamp(0.9rem, 2.5vw, 1.15rem);
-    color: var(--muted);
+    color: var(--accent);
     letter-spacing: 0.04em;
     text-transform: uppercase;
+  }
+  .progress-row {
+    margin-top: 18px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .progress-track {
+    flex: 1;
+    height: 6px;
+    border-radius: 4px;
+    background: var(--track);
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    width: 0%;
+    background: var(--accent);
+    border-radius: 4px;
+    transition: width 1s linear;
+  }
+  .progress-label {
+    font-size: 0.75rem;
+    color: var(--muted);
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
   }
 </style>
 </head>
 <body>
   <div class="clock-wrap">
+    <div class="greeting" id="greeting">Loading…</div>
     <div class="time" id="time">--:--:--</div>
     <div class="date" id="date">Loading…</div>
+    <div class="progress-row">
+      <div class="progress-track">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+      <div class="progress-label" id="progressLabel">0%</div>
+    </div>
   </div>
 
   <script>
@@ -59,11 +101,27 @@
       document.getElementById("time").innerHTML =
         `${pad(now.getHours())}:${pad(now.getMinutes())}<span class="secs">:${pad(now.getSeconds())}</span>`;
 
+      const hour = now.getHours();
+      let greeting;
+      if (hour < 5) greeting = "Still up, night owl";
+      else if (hour < 12) greeting = "Good morning";
+      else if (hour < 17) greeting = "Good afternoon";
+      else if (hour < 21) greeting = "Good evening";
+      else greeting = "Winding down";
+      document.getElementById("greeting").textContent = greeting;
+
       const days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
       const months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
 
       document.getElementById("date").textContent =
         `${days[now.getDay()]}, ${months[now.getMonth()]} ${now.getDate()}, ${now.getFullYear()}`;
+
+      const secondsSinceMidnight =
+        now.getHours() * 3600 + now.getMinutes() * 60 + now.getSeconds();
+      const percentOfDay = (secondsSinceMidnight / 86400) * 100;
+
+      document.getElementById("progressFill").style.width = percentOfDay + "%";
+      document.getElementById("progressLabel").textContent = Math.floor(percentOfDay) + "%";
     }
 
     update();
